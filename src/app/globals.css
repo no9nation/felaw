@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+:root {
+  /* — Linklaters-inspired: deep charcoal + white + accent coral/teal — */
+  --background: #ffffff;
+  --foreground: #1a1a2e;
+  --surface: #ffffff;
+  --muted: #f4f4f6;
+  --border: #e2e2e8;
+  --accent: #1a1a2e;
+  --accent-soft: #6b6b80;
+  --highlight: #c8102e;
+  --highlight-soft: #e0243e;
+  --personhood: #2a5aa6;
+  --personhood-soft: #3a6fbe;
+  --nav-bg: #1a1a2e;
+  --hero-bg: #1a1a2e;
+  --card-hover: #f8f8fa;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--highlight);
+  --color-primary-light: var(--highlight-soft);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-public-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Elevation */
+.elevation-1 {
+  box-shadow: 0 1px 3px rgba(26, 26, 46, 0.06), 0 1px 2px rgba(26, 26, 46, 0.04);
+}
+
+.elevation-2 {
+  box-shadow: 0 8px 24px rgba(26, 26, 46, 0.1), 0 2px 8px rgba(26, 26, 46, 0.04);
+}
+
+.elevation-3 {
+  box-shadow: 0 16px 48px rgba(26, 26, 46, 0.12), 0 4px 16px rgba(26, 26, 46, 0.06);
+}
+
+/* Smooth transitions */
+* {
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Typography — Linklaters uses large, confident type */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+h1 { font-size: 3.5rem; }
+
+/* Links */
+a {
+  text-decoration: none;
+}
+
+/* Scrollbar — minimal */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c8c8d0;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0ad;
+}
+
+/* Focus — visible keyboard focus ring */
+:focus-visible {
+  outline: 2px solid var(--highlight);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(200, 16, 46, 0.12);
+  color: #1a1a2e;
+}
+
+/* Linklaters-style divider line */
+.ll-divider {
+  width: 48px;
+  height: 3px;
+  background: var(--highlight);
+}
+
+/* Card interaction */
+.ll-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ll-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(26, 26, 46, 0.12), 0 4px 16px rgba(26, 26, 46, 0.06);
+}
+
+/* ========= Print Stylesheet ========= */
+@media print {
+  /* Reset backgrounds for readability */
+  body {
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+
+  /* Hide navigation, footer, interactive elements */
+  header,
+  footer,
+  nav,
+  .no-print,
+  button,
+  [role="tablist"],
+  a[href="/map"],
+  .ll-divider {
+    display: none !important;
+  }
+
+  /* Force white backgrounds */
+  section,
+  div,
+  main {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+
+  /* Show link URLs inline for citations */
+  a[href^="/country/"]::after {
+    content: " [" attr(href) "]";
+    font-size: 9pt;
+    color: #666;
+  }
+
+  /* Prevent page breaks inside cards and tables */
+  .elevation-1,
+  .elevation-2,
+  .elevation-3,
+  table,
+  tr,
+  figure {
+    break-inside: avoid;
+  }
+
+  /* Section headings always start on new page */
+  h1 {
+    break-before: page;
+    font-size: 18pt;
+  }
+
+  h2 {
+    break-after: avoid;
+    font-size: 14pt;
+  }
+
+  h3 {
+    break-after: avoid;
+    font-size: 12pt;
+  }
+
+  /* Constrain hero section for print */
+  [class*="hero-bg"],
+  [class*="nav-bg"] {
+    background: #fff !important;
+    color: #000 !important;
+    padding: 0 !important;
+  }
+
+  /* Bar charts / progress bars: ensure visibility */
+  [style*="width:"] {
+    border: 1px solid #999;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Grade colors for print */
+  [class*="text-[var(--highlight)"] {
+    color: #000 !important;
+    font-weight: bold;
+  }
+
+  /* Sticky sidebar — flatten for print */
+  .sticky {
+    position: static !important;
+  }
+
+  /* Page margins */
+  @page {
+    margin: 2cm 1.5cm;
+    size: A4;
+  }
+
+  @page :first {
+    margin-top: 3cm;
+  }
+}
